@@ -13,11 +13,11 @@ Class PolicyAgent {
             $this.ConfigurationFile = [System.IO.FileInfo]::new($ConfigurationFilePath)
             if(
                 $this.ConfigurationFile.Exists -and
-                ($this.ConfigurationFile.Extension -eq "psd1")
+                ($this.ConfigurationFile.Extension -eq "conf")
             ){
-                $This.ApplicablePolicies = Import-PowerShellDataFile -Path $ConfigurationFilePath
-            }elseif(-not ($this.ConfigurationFile.Extension -eq "psd1")){
-                throw [System.IO.FileFormatException]::new("The input file must be a .psd1 file")
+                $This.ApplicablePolicies = Get-Content -Path $ConfigurationFilePath -Raw
+            }elseif(-not ($this.ConfigurationFile.Extension -eq "conf")){
+                throw [System.IO.FileFormatException]::new("The input file must be a .conf file")
             }elseif($this.ConfigurationFile.Exists){
                 throw [System.IO.FileNotFoundException]::new("Could not locate $ConfigurationFilePath")
             }
